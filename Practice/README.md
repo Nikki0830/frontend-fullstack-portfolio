@@ -574,6 +574,7 @@ Our remaining Day 1 topics will be:
 5. Next.js App Router introduction.
 6. GitHub setup and initial commits.
 what is server side rendering, can we sue only typescript in nextjs or we can use js also
+what is differ between postgre my sql momgodb all database..if anymore databases are there
 
 
 8. Important Next.js terminology
@@ -589,3 +590,87 @@ Route Handler	Creates backend API endpoints
 loading.tsx	Defines a loading UI
 error.tsx	Defines an error UI
 not-found.tsx	Defines a 404 page
+
+Frontend development roadmap
+1. Current step
+   Install and configure Tailwind CSS
+   
+   Style our React application using utility classes.
+
+2. Install Redux Toolkit
+   npm install @reduxjs/toolkit react-redux
+   
+   
+   Understand store, slices, reducers, actions, dispatch and selectors.
+3. Create the folder structure
+   src/
+     components/
+     pages/
+     features/
+       employees/
+     services/
+     app/
+     types/
+     hooks/
+
+4. Build the dashboard layout
+   - Sidebar
+   - Navbar
+   - Dashboard page
+   - KPI cards
+
+5. Build employee management
+   - Employee table
+   - Search
+   - Department filters
+   - Add employee modal
+   - Edit employee modal
+   - Delete confirmation
+
+6. Connect backend APIs
+
+   Connect our React application to the Express backend and PostgreSQL database.
+   - GET employees
+   - POST employee
+   - PUT employee
+   - DELETE employee
+
+7. Testing and polish
+   - Form validation
+   - Loading and error states
+   - Empty states
+   - Responsive design
+   - CRUD testing
+
+   ---------------------------------
+   Project 1 — Admin & Employee Dashboard
+   
+Currently building
+Stage 1: Build
+- Complete frontend UI.
+- Complete employee CRUD.
+- Connect PostgreSQL APIs.
+- Add responsive design.
+- Test the application.
+
+Stage 2: Publish
+- GitHub.
+- README.
+- Screenshots.
+- Deployment.
+- Resume, LinkedIn, portfolio and Behance.
+
+Stage 3: Understand
+- Revisit every important file.
+- Understand code line by line.
+- Ask all your doubts.
+- Revise architecture and data flow.
+Stage 4: Prepare
+- Project interview questions.
+- Technology questions.
+- Coding and debugging exercises.
+- Machine coding.
+Stage 5: Test
+- Mock interviews.
+- Independent project explanation.
+- Practical implementation test.
