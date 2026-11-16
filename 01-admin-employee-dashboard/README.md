@@ -1,6 +1,6 @@
 # Admin & Employee Management Dashboard
 
-A full-stack employee management application built to help organizations manage employee records through a centralized, responsive dashboard.
+A full-stack Admin & Employee Management Dashboard built with React, TypeScript, Redux Toolkit, Node.js, Express.js, and PostgreSQL. Includes employee CRUD operations, dashboard analytics, search, filtering, and responsive UI.
 
 ## Project Overview
 
