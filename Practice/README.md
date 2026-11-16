@@ -665,12 +665,25 @@ Stage 3: Understand
 - Understand code line by line.
 - Ask all your doubts.
 - Revise architecture and data flow.
+
 Stage 4: Prepare
 - Project interview questions.
 - Technology questions.
 - Coding and debugging exercises.
+
 - Machine coding.
 Stage 5: Test
 - Mock interviews.
 - Independent project explanation.
 - Practical implementation test.
+
+
+Recommended order from here
+1. Finish CRUD and fix the modal.
+2. Complete dashboard functionality and UI polish.
+3. Test the entire application.
+4. Deploy and publish.
+5. Resume, LinkedIn, portfolio and Behance updates.
+6. Project explanation, interview questions and mock interview.
+
+

@@ -1,11 +1,19 @@
 import express from "express"
 import employeeRoutes from "./routes/employeeRoutes.js"
 import pool from "./config/database.js"
+import cors from "cors";
+
 
 const app = express()
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        process.env.FRONTEND_URL
+    ].filter(Boolean)
+}));
 //middleware
 app.use(express.json())
 
