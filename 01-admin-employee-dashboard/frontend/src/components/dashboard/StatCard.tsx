@@ -8,7 +8,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, icon, color }: StatCardProps) => {
     return (
-        <div className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-6">
+        <div className="group rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5 lg:p-6">
 
             <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-medium text-slate-500">
@@ -20,7 +20,7 @@ const StatCard = ({ title, value, icon, color }: StatCardProps) => {
                 </span>
             </div>
 
-            <h3 className="mt-4 text-2xl font-bold text-slate-800 sm:text-3xl">
+            <h3 className="mt-4 text-xl font-bold text-slate-800 sm:text-2xl lg:text-3xl">
                 {value}
             </h3>
 

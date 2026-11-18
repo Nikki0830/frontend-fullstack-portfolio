@@ -85,16 +85,16 @@ const Dashboard = () => {
 
     return (
         <div>
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold text-slate-800">
+            <div className="mb-5 sm:mb-8">
+                <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">
                     Dashboard Overview
                 </h1>
-                <p className="mt-2 text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 sm:mt-2 sm:text-base">
                     Manage your employees and organization.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 xl:gap-6">
+            <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 sm:gap-4 xl:grid-cols-4 xl:gap-6">
                 <StatCard
                     title="Total Employees"
                     value={totalEmployees}

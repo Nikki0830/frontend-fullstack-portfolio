@@ -31,13 +31,11 @@ const EmployeeTable = ({
         (state: RootState) => state.employees.error
     );
 
-    // Get unique departments
     const departments = [
         "All",
         ...new Set(employees.map((employee) => employee.department)),
     ];
 
-    // Search and department filtering
     const filteredEmployees = employees.filter((employee) => {
         const matchesSearch = `${employee.name} ${employee.email} ${employee.role}`
             .toLowerCase()
@@ -50,7 +48,6 @@ const EmployeeTable = ({
         return matchesSearch && matchesDepartment;
     });
 
-    // Delete employee
     const handleDelete = (id: number) => {
         if (
             window.confirm(
@@ -62,38 +59,35 @@ const EmployeeTable = ({
     };
 
     return (
-        <div className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="mt-6 sm:mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
 
             {/* Header */}
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 p-4 sm:p-6">
+            <div className="flex flex-col gap-4 border-b border-slate-200 p-4 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h2 className="text-lg font-semibold text-slate-800">
                         Recent Employees
                     </h2>
-
                     <p className="mt-1 text-sm text-slate-500">
                         Manage your employee records
                     </p>
                 </div>
 
-                <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
-
-                    {/* Search */}
+                {/* Search and Filters */}
+                <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:w-auto lg:flex lg:items-center">
                     <input
                         type="text"
                         placeholder="Search by name, email or role..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 sm:w-64"
+                        className="w-full min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 lg:w-64"
                     />
 
-                    {/* Department Filter */}
                     <select
                         value={selectedDepartment}
                         onChange={(e) =>
                             setSelectedDepartment(e.target.value)
                         }
-                        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 sm:w-auto"
+                        className="w-full min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                     >
                         {departments.map((department) => (
                             <option key={department} value={department}>
@@ -102,119 +96,154 @@ const EmployeeTable = ({
                         ))}
                     </select>
 
-                    {/* Add Employee */}
                     <button
                         type="button"
                         onClick={onAddEmployee}
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-md active:translate-y-0 sm:w-auto"
+                        className="w-full whitespace-nowrap rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md active:scale-[0.98] sm:col-span-2 lg:col-span-1 lg:w-auto"
                     >
                         + Add Employee
                     </button>
                 </div>
             </div>
 
-            {/* Employee Table */}
-            <div className="w-full overflow-x-auto">
-                <table className="w-full min-w-[650px] text-left text-sm">
-
-                    {/* Table Header */}
-                    <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
-                        <tr>
-                            <th className="px-6 py-4">Employee</th>
-                            <th className="px-6 py-4">Role</th>
-                            <th className="px-6 py-4">Department</th>
-                            <th className="px-6 py-4">Actions</th>
-                        </tr>
-                    </thead>
-
-                    {/* Table Body */}
-                    <tbody className="divide-y divide-slate-100">
-
-                        {loading ? (
-                            <tr>
-                                <td colSpan={4} className="px-6 py-12 text-center text-slate-500">
-                                    Loading employees...
-                                </td>
-                            </tr>
-
-                        ) : error ? (
-                            <tr>
-                                <td colSpan={4} className="px-6 py-12 text-center text-red-500">
-                                    {error}
-                                </td>
-                            </tr>
-
-                        ) : filteredEmployees.length > 0 ? (
-                            filteredEmployees.map((employee) => (
-                                <tr
-                                    key={employee.id}
-                                    className="transition-colors duration-200 hover:bg-blue-50/50"
-                                >
-                                    <td className="px-6 py-4">
-                                        <p className="font-medium text-slate-800">
+            {/* Loading, Error and Empty States */}
+            {loading ? (
+                <div className="px-4 py-12 text-center text-slate-500">
+                    Loading employees...
+                </div>
+            ) : error ? (
+                <div className="px-4 py-12 text-center text-red-500">
+                    {error}
+                </div>
+            ) : filteredEmployees.length === 0 ? (
+                <div className="px-4 py-12 text-center text-slate-500">
+                    {searchTerm || selectedDepartment !== "All"
+                        ? "No matching employees found."
+                        : "No employees found. Click Add Employee to get started."}
+                </div>
+            ) : (
+                <>
+                    {/* Mobile Employee Cards */}
+                    <div className="space-y-3 p-4 md:hidden">
+                        {filteredEmployees.map((employee) => (
+                            <div
+                                key={employee.id}
+                                className="rounded-xl border border-slate-200 bg-slate-50 p-4 transition-all duration-200 hover:border-blue-200 hover:bg-blue-50/40"
+                            >
+                                <div className="flex min-w-0 items-start justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <h3 className="break-words font-semibold text-slate-800">
                                             {employee.name}
-                                        </p>
-
-                                        <p className="text-xs text-slate-500">
+                                        </h3>
+                                        <p className="mt-1 break-all text-xs text-slate-500">
                                             {employee.email}
                                         </p>
-                                    </td>
+                                    </div>
 
-                                    <td className="px-6 py-4 text-slate-600">
-                                        {employee.role}
-                                    </td>
-
-                                    <td className="px-6 py-4 text-slate-600">
+                                    <span className="shrink-0 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
                                         {employee.department}
-                                    </td>
+                                    </span>
+                                </div>
 
-                                    <td className="px-6 py-4">
-                                        <div className="flex gap-3">
+                                <div className="mt-3 border-t border-slate-200 pt-3">
+                                    <p className="text-sm text-slate-600">
+                                        <span className="font-medium text-slate-700">
+                                            Role:
+                                        </span>{" "}
+                                        {employee.role}
+                                    </p>
+                                </div>
 
-                                            {/* Edit */}
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    onEditEmployee(employee)
-                                                }
-                                                className="rounded-md px-2 py-1 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-800"
-                                            >
-                                                Edit
-                                            </button>
+                                <div className="mt-4 flex gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            onEditEmployee(employee)
+                                        }
+                                        className="flex-1 rounded-lg border border-blue-200 bg-white px-3 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
+                                    >
+                                        Edit
+                                    </button>
 
-                                            {/* Delete */}
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    handleDelete(employee.id)
-                                                }
-                                                className="rounded-md px-2 py-1 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-800"
-                                            >
-                                                Delete
-                                            </button>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleDelete(employee.id)
+                                        }
+                                        className="flex-1 rounded-lg border border-red-200 bg-white px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
-                                        </div>
-                                    </td>
+                    {/* Desktop Employee Table */}
+                    <div className="hidden overflow-x-auto md:block">
+                        <table className="w-full min-w-[650px] text-left text-sm">
+                            <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                                <tr>
+                                    <th className="px-6 py-4">Employee</th>
+                                    <th className="px-6 py-4">Role</th>
+                                    <th className="px-6 py-4">Department</th>
+                                    <th className="px-6 py-4">Actions</th>
                                 </tr>
-                            ))
+                            </thead>
 
-                        ) : (
-                            <tr>
-                                <td
-                                    colSpan={4}
-                                    className="px-6 py-12 text-center text-slate-500"
-                                >
-                                    {searchTerm ||
-                                        selectedDepartment !== "All"
-                                        ? "No matching employees found."
-                                        : "No employees found. Click Add Employee to get started."}
-                                </td>
-                            </tr>
-                        )}
+                            <tbody className="divide-y divide-slate-100">
+                                {filteredEmployees.map((employee) => (
+                                    <tr
+                                        key={employee.id}
+                                        className="transition-colors duration-200 hover:bg-blue-50/50"
+                                    >
+                                        <td className="px-6 py-4">
+                                            <p className="font-medium text-slate-800">
+                                                {employee.name}
+                                            </p>
+                                            <p className="text-xs text-slate-500">
+                                                {employee.email}
+                                            </p>
+                                        </td>
 
-                    </tbody>
-                </table>
-            </div>
+                                        <td className="px-6 py-4 text-slate-600">
+                                            {employee.role}
+                                        </td>
+
+                                        <td className="px-6 py-4 text-slate-600">
+                                            {employee.department}
+                                        </td>
+
+                                        <td className="px-6 py-4">
+                                            <div className="flex gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        onEditEmployee(employee)
+                                                    }
+                                                    className="rounded-md px-2 py-1 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-800"
+                                                >
+                                                    Edit
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleDelete(employee.id)
+                                                    }
+                                                    className="rounded-md px-2 py-1 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-800"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

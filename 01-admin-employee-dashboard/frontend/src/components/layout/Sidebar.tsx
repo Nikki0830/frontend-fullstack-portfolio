@@ -10,7 +10,7 @@ const Sidebar = () => {
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed left-4 top-4 z-50 rounded-lg bg-slate-900 p-2 text-white md:hidden"
+                className="fixed left-3 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-lg bg-slate-900 text-xl text-white shadow-lg transition hover:bg-slate-700 md:hidden"
                 aria-label="Toggle navigation menu"
             >
                 {isOpen ? "✕" : "☰"}
@@ -28,7 +28,7 @@ const Sidebar = () => {
             <aside
                 className={`
                     fixed inset-y-0 left-0 z-40
-                    w-64 min-h-screen bg-slate-900 p-5 text-white
+                    w-64 min-h-screen bg-slate-900 p-5 pt-16 text-white md:pt-5
                     transform transition-transform duration-300
                     md:static md:translate-x-0 md:shrink-0
                     ${isOpen ? "translate-x-0" : "-translate-x-full"}
